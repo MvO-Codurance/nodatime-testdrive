@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTimeTestDrive.Console", "NodaTimeTestDrive.Console\NodaTimeTestDrive.Console.csproj", "{F24116CF-ACEE-4D4D-8117-A7F114B66BE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTimeTestDrive", "NodaTimeTestDrive\NodaTimeTestDrive.csproj", "{AA6417BA-6517-4CD8-8C3F-82BD91E312F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTimeTestDrive.Tests", "NodaTimeTestDrive.Tests\NodaTimeTestDrive.Tests.csproj", "{DC9B0254-E75E-440D-9471-714773CC55FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{F24116CF-ACEE-4D4D-8117-A7F114B66BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F24116CF-ACEE-4D4D-8117-A7F114B66BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F24116CF-ACEE-4D4D-8117-A7F114B66BE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA6417BA-6517-4CD8-8C3F-82BD91E312F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA6417BA-6517-4CD8-8C3F-82BD91E312F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA6417BA-6517-4CD8-8C3F-82BD91E312F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA6417BA-6517-4CD8-8C3F-82BD91E312F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC9B0254-E75E-440D-9471-714773CC55FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC9B0254-E75E-440D-9471-714773CC55FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC9B0254-E75E-440D-9471-714773CC55FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC9B0254-E75E-440D-9471-714773CC55FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
