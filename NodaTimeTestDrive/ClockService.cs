@@ -11,7 +11,7 @@ public class ClockService : IClockService
     private readonly IDateTimeZoneProvider _timezoneProvider;
 
     public DateTimeZone TimeZone { get; }
-    public Instant Now => throw new NotImplementedException();
+    public Instant Now => _clock.GetCurrentInstant();
     public LocalDateTime LocalNow => throw new NotImplementedException();
     
     public ClockService(IClock clock, IDateTimeZoneProvider timezoneProvider)
