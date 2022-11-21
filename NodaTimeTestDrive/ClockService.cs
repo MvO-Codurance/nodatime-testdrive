@@ -1,6 +1,7 @@
 using System.Globalization;
 using NodaTime;
 using NodaTime.Extensions;
+using NodaTime.TimeZones;
 using TimeZoneNames;
 
 namespace NodaTimeTestDrive;
@@ -35,11 +36,8 @@ public class ClockService : IClockService
      * (see https://github.com/mattjohnsonpint/TimeZoneNames) this still leads to inconsistency between Windows and
      * Linux timezone ids. So, we use "TimeZoneNames" to ensure consistent use of the IANA timezone ids.
      */
-    public IEnumerable<TimezoneForDisplay> GetTimezonesForDisplay()
-    {
-        return GetTimezonesForDisplay(CultureInfo.CurrentUICulture.Name);
-    }
-    
+    public IEnumerable<TimezoneForDisplay> GetTimezonesForDisplay() => GetTimezonesForDisplay(CultureInfo.CurrentUICulture.Name);
+
     public IEnumerable<TimezoneForDisplay> GetTimezonesForDisplay(string languageCode)
     {
         var list = TZNames.GetDisplayNames(languageCode: languageCode, useIanaZoneIds: true);
@@ -48,13 +46,7 @@ public class ClockService : IClockService
             .OrderBy(keySelector: x => x.Name);    
     }
     
-    public Instant ToInstant(LocalDateTime local)
-    {
-        throw new NotImplementedException();
-    }
+    public Instant? ToInstant(LocalDateTime? local) => local?.InZone(TimeZone, Resolvers.LenientResolver).ToInstant();
 
-    public LocalDateTime ToLocal(Instant instant)
-    {
-        throw new NotImplementedException();
-    }
+    public LocalDateTime? ToLocal(Instant? instant) => instant?.InZone(TimeZone).LocalDateTime;
 }

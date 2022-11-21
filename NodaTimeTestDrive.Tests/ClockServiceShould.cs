@@ -70,11 +70,45 @@ public class ClockServiceShould
     }
     
     [Fact]
-    public void Returns_Correct_LocalNow_ForEurope_London_Timezone()
+    public void Returns_Correct_LocalNow_For_Europe_London_Timezone()
     {
         var sut = GetClockService();
 
         sut.LocalNow.ToString().Should().Be("20/11/2022 10:30:00");
+    }
+    
+    [Fact]
+    public void Returns_Null_Instant_For_Null_LocalDateTime()
+    {
+        var sut = GetClockService();
+
+        sut.ToInstant(null).Should().BeNull();
+    }
+    
+    [Fact]
+    public void Returns_Correct_Instant_For_LocalDateTime_For_Europe_London_Timezone()
+    {
+        var sut = GetClockService();
+        var localDateTime = new LocalDateTime(2022, 11, 20, 10, 30);
+        
+        sut.ToInstant(localDateTime).ToString().Should().Be("2022-11-20T10:30:00Z");
+    }
+    
+    [Fact]
+    public void Returns_Null_LocalDateTime_For_Null_Instant()
+    {
+        var sut = GetClockService();
+
+        sut.ToLocal(null).Should().BeNull();
+    }
+    
+    [Fact]
+    public void Returns_Correct_LocalDateTime_For_Instant_For_Europe_London_Timezone()
+    {
+        var sut = GetClockService();
+        var instant = Instant.FromUtc(2022, 11, 20, 10, 30);
+        
+        sut.ToLocal(instant).ToString().Should().Be("20/11/2022 10:30:00");
     }
 
     private static ClockService GetClockService()

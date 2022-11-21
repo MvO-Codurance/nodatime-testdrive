@@ -10,11 +10,13 @@ public interface IClockService
 
     LocalDateTime LocalNow { get; }
 
-    Instant ToInstant(LocalDateTime local);
+    Instant? ToInstant(LocalDateTime? local);
 
-    LocalDateTime ToLocal(Instant instant);
+    LocalDateTime? ToLocal(Instant? instant);
 
     IEnumerable<DateTimeZone> GetAllTimezones();
 
+    IEnumerable<TimezoneForDisplay> GetTimezonesForDisplay(string languageCode);
+    
     IEnumerable<TimezoneForDisplay> GetTimezonesForDisplay();
 }
