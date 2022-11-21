@@ -7,7 +7,8 @@ using var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) => services
         .AddSingleton<IClock>(_ => SystemClock.Instance)
         .AddSingleton<IDateTimeZoneProvider>(_ => DateTimeZoneProviders.Tzdb)
-        .AddSingleton<IClockService, ClockService>())
+        // IClockService is scoped as the Timezone could change on a per-user basis
+        .AddScoped<IClockService, ClockService>())
     .Build();
 
 var clockService = host.Services.GetRequiredService<IClockService>();

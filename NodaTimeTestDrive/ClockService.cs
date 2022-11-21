@@ -10,7 +10,7 @@ public class ClockService : IClockService
     private readonly IClock _clock;
     private readonly IDateTimeZoneProvider _timezoneProvider;
 
-    public DateTimeZone TimeZone => throw new NotImplementedException();
+    public DateTimeZone TimeZone { get; }
     public Instant Now => throw new NotImplementedException();
     public LocalDateTime LocalNow => throw new NotImplementedException();
     
@@ -18,6 +18,10 @@ public class ClockService : IClockService
     {
         _clock = clock;
         _timezoneProvider = timezoneProvider;
+        
+        // TODO populate the timezone from application or user settings 
+        // for now, default to Europe/London
+        TimeZone = DateTimeZoneProviders.Tzdb["Europe/London"];
     }
     
     // This returns all NodaTime (IANA) timezones but the main useful property is the actual Id
