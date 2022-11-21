@@ -12,7 +12,7 @@ public class ClockService : IClockService
 
     public DateTimeZone TimeZone { get; }
     public Instant Now => _clock.GetCurrentInstant();
-    public LocalDateTime LocalNow => throw new NotImplementedException();
+    public LocalDateTime LocalNow => Now.InZone(TimeZone).LocalDateTime;
     
     public ClockService(IClock clock, IDateTimeZoneProvider timezoneProvider)
     {

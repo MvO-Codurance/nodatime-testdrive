@@ -68,6 +68,14 @@ public class ClockServiceShould
 
         sut.Now.ToString().Should().Be("2022-11-20T10:30:00Z");
     }
+    
+    [Fact]
+    public void Returns_Correct_LocalNow_ForEurope_London_Timezone()
+    {
+        var sut = GetClockService();
+
+        sut.LocalNow.ToString().Should().Be("20/11/2022 10:30:00");
+    }
 
     private static ClockService GetClockService()
     {
