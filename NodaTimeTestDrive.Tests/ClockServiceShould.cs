@@ -77,12 +77,14 @@ public class ClockServiceShould
         sut.Now.ToString().Should().Be("2022-11-20T10:30:00Z");
     }
     
-    [Fact]
-    public void Returns_Correct_LocalNow_For_Europe_London_Timezone()
+    [Theory]
+    [InlineData("Europe/London", "20/11/2022 10:30:00")]
+    [InlineData("Europe/Istanbul", "20/11/2022 13:30:00")]
+    public void Returns_Correct_LocalNow_For_The_Given_Timezone(string timezoneId, string expectedLocalNow)
     {
-        var sut = GetClockService();
+        var sut = GetClockService(timezoneId);
 
-        sut.LocalNow.ToString().Should().Be("20/11/2022 10:30:00");
+        sut.LocalNow.ToString().Should().Be(expectedLocalNow);
     }
     
     [Fact]
@@ -93,13 +95,17 @@ public class ClockServiceShould
         sut.ToInstant(null).Should().BeNull();
     }
     
-    [Fact]
-    public void Returns_Correct_Instant_For_LocalDateTime_For_Europe_London_Timezone()
+    [Theory]
+    [InlineData("Europe/London", "2022-11-20T10:30:00Z")]
+    [InlineData("Europe/Istanbul", "2022-11-20T07:30:00Z")]
+    public void Returns_Correct_Instant_For_LocalDateTime_For_The_Given_Timezone(
+        string timezoneId, 
+        string expectedInstant)
     {
-        var sut = GetClockService();
+        var sut = GetClockService(timezoneId);
         var localDateTime = new LocalDateTime(2022, 11, 20, 10, 30);
         
-        sut.ToInstant(localDateTime).ToString().Should().Be("2022-11-20T10:30:00Z");
+        sut.ToInstant(localDateTime).ToString().Should().Be(expectedInstant);
     }
     
     [Fact]
@@ -110,13 +116,17 @@ public class ClockServiceShould
         sut.ToLocal(null).Should().BeNull();
     }
     
-    [Fact]
-    public void Returns_Correct_LocalDateTime_For_Instant_For_Europe_London_Timezone()
+    [Theory]
+    [InlineData("Europe/London", "20/11/2022 10:30:00")]
+    [InlineData("Europe/Istanbul", "20/11/2022 13:30:00")]
+    public void Returns_Correct_LocalDateTime_For_Instant_For_The_Given_Timezone(
+        string timezoneId, 
+        string expectedLocal)
     {
-        var sut = GetClockService();
+        var sut = GetClockService(timezoneId);
         var instant = Instant.FromUtc(2022, 11, 20, 10, 30);
         
-        sut.ToLocal(instant).ToString().Should().Be("20/11/2022 10:30:00");
+        sut.ToLocal(instant).ToString().Should().Be(expectedLocal);
     }
 
     private static ClockService GetClockService(string? timezoneId = null)
