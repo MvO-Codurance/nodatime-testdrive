@@ -42,8 +42,7 @@ public class ClockService : IClockService
     {
         var list = TZNames.GetDisplayNames(languageCode: languageCode, useIanaZoneIds: true);
         return list
-            .Select(selector: entry => new TimezoneForDisplay(Id: entry.Key, Name: entry.Value))
-            .OrderBy(keySelector: x => x.Name);    
+            .Select(selector: entry => new TimezoneForDisplay(Id: entry.Key, Name: entry.Value));    
     }
     
     public Instant? ToInstant(LocalDateTime? local) => local?.InZone(TimeZone, Resolvers.LenientResolver).ToInstant();

@@ -22,8 +22,8 @@ public class ClockServiceShould
         var timezones = sut.GetTimezonesForDisplay().ToList();
 
         timezones.Should().HaveCount(139);
-        timezones[0].Id.Should().Be("Atlantic/Azores");
-        timezones[0].Name.Should().Be("(UTC-01:00) Azores");
+        timezones[0].Id.Should().Be("Etc/GMT+12");
+        timezones[0].Name.Should().Be("(UTC-12:00) International Date Line West");
         timezones[138].Id.Should().Be("Pacific/Kiritimati");
         timezones[138].Name.Should().Be("(UTC+14:00) Kiritimati Island");
     }
@@ -36,8 +36,8 @@ public class ClockServiceShould
         var timezones = sut.GetTimezonesForDisplay("fr").ToList();
 
         timezones.Should().HaveCount(139);
-        timezones[0].Id.Should().Be("Atlantic/Cape_Verde");
-        timezones[0].Name.Should().Be("(UTC-01:00) Îles de Cabo Verde");
+        timezones[0].Id.Should().Be("Etc/GMT+12");
+        timezones[0].Name.Should().Be("(UTC-12:00) Ligne de date internationale (Ouest)");
         timezones[138].Id.Should().Be("Pacific/Kiritimati");
         timezones[138].Name.Should().Be("(UTC+14:00) Kiritimati, Île");
     }
