@@ -6,7 +6,6 @@ using NodaTimeTestDrive;
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) => services
         .AddSingleton<IClock>(_ => SystemClock.Instance)
-        .AddSingleton<IDateTimeZoneProvider>(_ => DateTimeZoneProviders.Tzdb)
         // IClockService is scoped as the Timezone could change on a per-user basis
         .AddScoped<IClockService, ClockService>())
     .Build();
