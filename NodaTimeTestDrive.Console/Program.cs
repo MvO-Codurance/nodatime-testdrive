@@ -11,7 +11,7 @@ using var host = Host.CreateDefaultBuilder(args)
     .Build();
 
 var clockService = host.Services.GetRequiredService<IClockService>();
-foreach (var tz in clockService.TimezonesForDisplay)
+foreach (var tz in clockService.GetTimezonesForDisplay())
 {
     Console.WriteLine($"{tz.Id} - {tz.Name}");
 }
