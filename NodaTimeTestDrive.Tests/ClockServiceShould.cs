@@ -132,15 +132,14 @@ public class ClockServiceShould
     private static ClockService GetClockService(string? timezoneId = null)
     {
         var clock = new FakeClock(Instant.FromUtc(2022, 11, 20, 10, 30));
-        var timezoneProvider = DateTimeZoneProviders.Tzdb;
         DateTimeZone? timezone = null;
 
         if (!string.IsNullOrWhiteSpace(timezoneId))
         {
-            timezone = timezoneProvider.GetZoneOrNull(timezoneId);
+            timezone = DateTimeZoneProviders.Tzdb.GetZoneOrNull(timezoneId);
         }
         
-        var sut = new ClockService(clock, timezoneProvider, timezone);
+        var sut = new ClockService(clock, timezone);
         return sut;
     }
 }

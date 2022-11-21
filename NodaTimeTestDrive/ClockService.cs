@@ -15,14 +15,14 @@ public class ClockService : IClockService
     public Instant Now => _clock.GetCurrentInstant();
     public LocalDateTime LocalNow => Now.InZone(TimeZone).LocalDateTime;
 
-    public ClockService(IClock clock, IDateTimeZoneProvider timezoneProvider, DateTimeZone? timezone = null)
+    public ClockService(IClock clock, DateTimeZone? timezone = null)
     {
         _clock = clock;
-        _timezoneProvider = timezoneProvider;
+        _timezoneProvider = DateTimeZoneProviders.Tzdb;
         
         // use the supplied timezone or use default
         // TODO populate the default timezone from application or user settings (for now, use "Europe/London")
-        TimeZone = timezone ?? DateTimeZoneProviders.Tzdb["Europe/London"];;
+        TimeZone = timezone ?? _timezoneProvider["Europe/London"];
     }
     
     // This returns all NodaTime (IANA) timezones but the main useful property is the actual Id
