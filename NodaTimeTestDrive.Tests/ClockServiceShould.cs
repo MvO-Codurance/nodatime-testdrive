@@ -62,6 +62,14 @@ public class ClockServiceShould
     }
     
     [Fact]
+    public void Use_The_Specified_Timezone_As_The_Timezone()
+    {
+        var sut = GetClockService("Europe/Istanbul");
+
+        sut.TimeZone.Id.Should().Be("Europe/Istanbul");
+    }
+    
+    [Fact]
     public void Returns_Correct_Now_Instant()
     {
         var sut = GetClockService();
@@ -111,11 +119,18 @@ public class ClockServiceShould
         sut.ToLocal(instant).ToString().Should().Be("20/11/2022 10:30:00");
     }
 
-    private static ClockService GetClockService()
+    private static ClockService GetClockService(string? timezoneId = null)
     {
         var clock = new FakeClock(Instant.FromUtc(2022, 11, 20, 10, 30));
         var timezoneProvider = DateTimeZoneProviders.Tzdb;
-        var sut = new ClockService(clock, timezoneProvider);
+        DateTimeZone? timezone = null;
+
+        if (!string.IsNullOrWhiteSpace(timezoneId))
+        {
+            timezone = timezoneProvider.GetZoneOrNull(timezoneId);
+        }
+        
+        var sut = new ClockService(clock, timezoneProvider, timezone);
         return sut;
     }
 }
