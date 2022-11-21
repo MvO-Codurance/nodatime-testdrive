@@ -26,7 +26,7 @@ public class ClockService : IClockService
     }
     
     // This returns all NodaTime (IANA) timezones but the main useful property is the actual Id
-    public IEnumerable<DateTimeZone> GetAllTimezones() => _timezoneProvider.GetAllZones();
+    public IEnumerable<string> GetAllTimezones() => _timezoneProvider.GetAllZones().Select(x => x.Id);
     
     /* This returns timezones that are suitable for display (using the Name property), mapped back to the IANA Id.
      * This is required to have a better UX for end-users.

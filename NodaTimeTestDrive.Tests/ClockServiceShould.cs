@@ -10,8 +10,8 @@ public class ClockServiceShould
         var timezones = sut.GetAllTimezones().ToList();
 
         timezones.Should().HaveCount(595);
-        timezones[0].Id.Should().Be("Africa/Abidjan");
-        timezones[594].Id.Should().Be("Zulu");
+        timezones[0].Should().Be("Africa/Abidjan");
+        timezones[594].Should().Be("Zulu");
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class ClockServiceShould
     {
         var sut = GetClockService();
 
-        var allTimezoneIds = sut.GetAllTimezones().Select(x => x.Id).ToList();
+        var allTimezoneIds = sut.GetAllTimezones().ToList();
         var timezoneIdsForDisplay = sut.GetTimezonesForDisplay().Select(x => x.Id).ToList();
 
         timezoneIdsForDisplay.Except(allTimezoneIds).Should().HaveCount(0);

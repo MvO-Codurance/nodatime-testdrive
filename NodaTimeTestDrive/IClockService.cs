@@ -14,7 +14,7 @@ public interface IClockService
 
     LocalDateTime? ToLocal(Instant? instant);
 
-    IEnumerable<DateTimeZone> GetAllTimezones();
+    IEnumerable<string> GetAllTimezones();
 
     IEnumerable<TimezoneForDisplay> GetTimezonesForDisplay(string languageCode);
     
