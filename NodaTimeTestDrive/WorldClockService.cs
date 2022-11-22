@@ -28,7 +28,6 @@ public class WorldClockService : IWorldClockService
 
             worldClocks.Add(
                 new WorldClock(
-                    TimezoneId: timezoneId,
                     Timezone: timezone,
                     Instant: _clock.GetCurrentInstant(),
                     ZonedDateTime: zonedClock.GetCurrentZonedDateTime(),

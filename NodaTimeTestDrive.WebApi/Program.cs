@@ -1,4 +1,5 @@
 using NodaTime;
+using NodaTime.Serialization.SystemTextJson;
 using NodaTimeTestDrive;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,9 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
 builder.Services
     .AddSingleton<IClock>(_ => SystemClock.Instance)
-    .AddScoped<IClockService, ClockService>();
+    .AddScoped<IClockService, ClockService>()
+    .AddScoped<IWorldClockService, WorldClockService>();
 
 var app = builder.Build();
 
@@ -24,5 +27,13 @@ app.UseHttpsRedirection();
 app.MapGet("/timezones/all", (IClockService clockService) => clockService.GetAllTimezones());
 
 app.MapGet("/timezones/for-display", (IClockService clockService) => clockService.GetTimezonesForDisplay());
+
+app.MapGet("/worldclocks", (IWorldClockService worldClockService) => worldClockService.GetClocks(
+    "America/Los_Angeles",
+    "America/New_York",
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Rome",
+    "Asia/Tokyo"));
 
 app.Run();

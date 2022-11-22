@@ -15,7 +15,6 @@ public class WorldClockServiceShould
         
         var worldClock = actualClocks[0]; 
         worldClock.Should().NotBeNull();
-        worldClock.TimezoneId.Should().Be(timezoneId);
         worldClock.Timezone.Should().NotBeNull();
         worldClock.Timezone.Id.Should().Be(timezoneId);
     }
@@ -32,13 +31,11 @@ public class WorldClockServiceShould
 
         var londonClock = actualClocks[0]; 
         londonClock.Should().NotBeNull();
-        londonClock.TimezoneId.Should().Be(timezoneIds[0]);
         londonClock.Timezone.Should().NotBeNull();
         londonClock.Timezone.Id.Should().Be(timezoneIds[0]);
         
         var istanbulClock = actualClocks[1]; 
         istanbulClock.Should().NotBeNull();
-        istanbulClock.TimezoneId.Should().Be(timezoneIds[1]);
         istanbulClock.Timezone.Should().NotBeNull();
         istanbulClock.Timezone.Id.Should().Be(timezoneIds[1]);
     }

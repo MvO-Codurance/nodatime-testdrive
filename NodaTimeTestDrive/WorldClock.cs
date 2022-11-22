@@ -2,4 +2,4 @@ using NodaTime;
 
 namespace NodaTimeTestDrive;
 
-public record struct WorldClock(string TimezoneId, DateTimeZone Timezone, Instant Instant, ZonedDateTime ZonedDateTime, LocalDateTime LocalDateTime);
+public record struct WorldClock(DateTimeZone Timezone, Instant Instant, ZonedDateTime ZonedDateTime, LocalDateTime LocalDateTime);
