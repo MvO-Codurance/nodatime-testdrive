@@ -5,6 +5,15 @@ using NodaTimeTestDrive;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAllOrigins", corsBuilder =>
+    {
+        corsBuilder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
@@ -35,5 +44,7 @@ app.MapGet("/worldclocks", (IWorldClockService worldClockService) => worldClockS
     "Europe/Paris",
     "Europe/Rome",
     "Asia/Tokyo"));
+
+app.UseCors("AllowAllOrigins");
 
 app.Run();
