@@ -3,7 +3,7 @@ using NodaTime.Extensions;
 
 namespace NodaTimeTestDrive;
 
-public class WorldClockService
+public class WorldClockService : IWorldClockService
 {
     private readonly IClock _clock;
 
@@ -28,11 +28,11 @@ public class WorldClockService
 
             worldClocks.Add(
                 new WorldClock(
-                    timezoneId,
-                    timezone,
-                    _clock.GetCurrentInstant(),
-                    zonedClock.GetCurrentZonedDateTime(),
-                    zonedClock.GetCurrentLocalDateTime())
+                    TimezoneId: timezoneId,
+                    Timezone: timezone,
+                    Instant: _clock.GetCurrentInstant(),
+                    ZonedDateTime: zonedClock.GetCurrentZonedDateTime(),
+                    LocalDateTime: zonedClock.GetCurrentLocalDateTime())
             );
         }
 
