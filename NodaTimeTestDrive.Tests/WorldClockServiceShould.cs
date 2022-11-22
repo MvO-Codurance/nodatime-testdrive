@@ -12,10 +12,12 @@ public class WorldClockServiceShould
         List<WorldClock> actualClocks = sut.GetClocks(timezoneId).ToList();
 
         actualClocks.Should().HaveCount(1);
-        actualClocks[0].Should().NotBeNull();
-        actualClocks[0].TimezoneId.Should().Be(timezoneId);
-        actualClocks[0].Timezone.Should().NotBeNull();
-        actualClocks[0].Timezone.Id.Should().Be(timezoneId);
+        
+        var londonClock = actualClocks[0]; 
+        londonClock.Should().NotBeNull();
+        londonClock.TimezoneId.Should().Be(timezoneId);
+        londonClock.Timezone.Should().NotBeNull();
+        londonClock.Timezone.Id.Should().Be(timezoneId);
     }
     
     [Theory]
@@ -27,10 +29,18 @@ public class WorldClockServiceShould
         List<WorldClock> actualClocks = sut.GetClocks(timezoneIds).ToList();
 
         actualClocks.Should().HaveCount(timezoneIds.Length);
-        actualClocks[0].Should().NotBeNull();
-        actualClocks[0].TimezoneId.Should().Be(timezoneIds[0]);
-        actualClocks[0].Timezone.Should().NotBeNull();
-        actualClocks[0].Timezone.Id.Should().Be(timezoneIds[0]);
+
+        var londonClock = actualClocks[0]; 
+        londonClock.Should().NotBeNull();
+        londonClock.TimezoneId.Should().Be(timezoneIds[0]);
+        londonClock.Timezone.Should().NotBeNull();
+        londonClock.Timezone.Id.Should().Be(timezoneIds[0]);
+        
+        var istanbulClock = actualClocks[1]; 
+        istanbulClock.Should().NotBeNull();
+        istanbulClock.TimezoneId.Should().Be(timezoneIds[1]);
+        istanbulClock.Timezone.Should().NotBeNull();
+        istanbulClock.Timezone.Id.Should().Be(timezoneIds[1]);
     }
     
     private static WorldClockService GetWorldClockService()
