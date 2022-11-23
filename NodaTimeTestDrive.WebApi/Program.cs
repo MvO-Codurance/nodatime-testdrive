@@ -1,13 +1,16 @@
+using MicroElements.Swashbuckle.NodaTime;
 using NodaTime;
 using NodaTime.Serialization.SystemTextJson;
 using NodaTimeTestDrive;
+
+const string allowAllOriginsCorsPolicy = "AllowAllOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "AllowAllOrigins", corsBuilder =>
+    options.AddPolicy(allowAllOriginsCorsPolicy, corsBuilder =>
     {
         corsBuilder.AllowAnyOrigin()
             .AllowAnyHeader()
@@ -15,7 +18,7 @@ builder.Services.AddCors(options =>
     });
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => options.ConfigureForNodaTimeWithSystemTextJson());
 builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
 builder.Services
     .AddSingleton<IClock>(_ => SystemClock.Instance)
@@ -45,6 +48,6 @@ app.MapGet("/worldclocks", (IWorldClockService worldClockService) => worldClockS
     "Europe/Rome",
     "Asia/Tokyo"));
 
-app.UseCors("AllowAllOrigins");
+app.UseCors(allowAllOriginsCorsPolicy);
 
 app.Run();
