@@ -45,8 +45,11 @@ const clockTemplate = ({ index, timezone, localDateTime }) => `
                 ]]>
             </script>
         </svg>
+        <div id="iconic-clock-datetime-string-${index}"></div>
     </div>
 `;
+
+const __localDateTimes = {};
 
 const initClock = (index, localDateTime) => {
     const date = new Date(Date.parse(localDateTime));
@@ -57,11 +60,24 @@ const initClock = (index, localDateTime) => {
     minutes = (minutes * 60) + seconds;
     hours = (hours * 3600) + minutes;
 
+    __localDateTimes[index] = date;
+
     document.querySelector(`#clock-${index} .iconic-clock-second-hand`).setAttribute('transform', 'rotate('+360*(seconds/60)+',192,192)');
     document.querySelector(`#clock-${index} .iconic-clock-minute-hand`).setAttribute('transform', 'rotate('+360*(minutes/3600)+',192,192)');
     document.querySelector(`#clock-${index} .iconic-clock-hour-hand`).setAttribute('transform', 'rotate('+360*(hours/43200)+',192,192)');
+    document.querySelector(`#iconic-clock-datetime-string-${index}`).textContent = date.toLocaleString();
+}
+
+const updateClocks = () => {
+    for(const clockIndex in __localDateTimes) {
+        // update the date/time string displayed for the clock
+        let clockDate = __localDateTimes[clockIndex];
+        clockDate.setSeconds(clockDate.getSeconds() + 1);
+        document.querySelector(`#iconic-clock-datetime-string-${clockIndex}`).textContent = clockDate.toLocaleString();
+    }
 }
 
 $(document).ready(function () {
     renderClocks();
+    setInterval(updateClocks, 1000);
 });
