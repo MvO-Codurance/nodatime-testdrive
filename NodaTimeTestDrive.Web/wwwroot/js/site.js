@@ -1,4 +1,22 @@
-﻿const clockTemplate = ({ index, timezone, localDateTime }) => `
+﻿const renderClocks = () => {
+    let index = 0;
+    fetch("https://localhost:7103/worldclocks")
+        .then(response => response.json())
+        .then(clocks => {
+            const clockData = clocks.map((clock) => {
+                return {
+                    index: index++,
+                    timezone: clock.timezone,
+                    localDateTime: clock.localDateTime
+                }
+            })
+
+            const container = $("#clocks-container");
+            container.html(clockData.map(clockTemplate).join(""));
+        });
+}
+
+const clockTemplate = ({ index, timezone, localDateTime }) => `
     <div class="iconic-clock-container">
         <div>${timezone}</div>
         <!-- SVG clock taken from https://codepen.io/gene7299/pen/eJeoPq -->       
@@ -23,39 +41,25 @@
             </defs>
             <script type="text/javascript">
                 <![CDATA[
-                var date = new Date(Date.parse("${localDateTime}"));
-                var seconds = date.getSeconds();
-                var minutes = date.getMinutes();
-                var hours = date.getHours();
-                hours = (hours > 12) ? hours - 12 : hours;            
-                minutes = (minutes * 60) + seconds;
-                hours = (hours * 3600) + minutes;
-                
-                document.querySelector('#clock-${index} .iconic-clock-second-hand').setAttribute('transform', 'rotate('+360*(seconds/60)+',192,192)');
-                document.querySelector('#clock-${index} .iconic-clock-minute-hand').setAttribute('transform', 'rotate('+360*(minutes/3600)+',192,192)');
-                document.querySelector('#clock-${index} .iconic-clock-hour-hand').setAttribute('transform', 'rotate('+360*(hours/43200)+',192,192)');
+                initClock(${index}, "${localDateTime}");
                 ]]>
             </script>
         </svg>
     </div>
 `;
 
-const renderClocks = () => {
-    let index = 0;
-    fetch("https://localhost:7103/worldclocks")
-        .then(response => response.json())
-        .then(clocks => {
-            const clockData = clocks.map((clock) => {
-                return {
-                    index: index++,
-                    timezone: clock.timezone,
-                    localDateTime: clock.localDateTime
-                }
-            })
-            
-            const container = $("#clocks-container");
-            container.html(clockData.map(clockTemplate).join(""));
-        });
+const initClock = (index, localDateTime) => {
+    const date = new Date(Date.parse(localDateTime));
+    let seconds = date.getSeconds();
+    let minutes = date.getMinutes();
+    let hours = date.getHours();
+    hours = (hours > 12) ? hours - 12 : hours;
+    minutes = (minutes * 60) + seconds;
+    hours = (hours * 3600) + minutes;
+
+    document.querySelector(`#clock-${index} .iconic-clock-second-hand`).setAttribute('transform', 'rotate('+360*(seconds/60)+',192,192)');
+    document.querySelector(`#clock-${index} .iconic-clock-minute-hand`).setAttribute('transform', 'rotate('+360*(minutes/3600)+',192,192)');
+    document.querySelector(`#clock-${index} .iconic-clock-hour-hand`).setAttribute('transform', 'rotate('+360*(hours/43200)+',192,192)');
 }
 
 $(document).ready(function () {
